@@ -17,25 +17,25 @@ var (
 )
 
 func (c *TafseerApiClient) ListChapters() ([]Chapter, error) {
-	ResourcePath := c.BaseURL.ResolveReference(&QuranPath)
-	resp, err := http.Get(ResourcePath.String())
+	r := c.BaseURL.ResolveReference(&QuranPath)
+	resp, err := http.Get(r.String())
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	var chapters []Chapter
-	err = json.NewDecoder(resp.Body).Decode(&chapters)
-	return chapters, err
+	var ch []Chapter
+	err = json.NewDecoder(resp.Body).Decode(&ch)
+	return ch, err
 }
 
 func (c *TafseerApiClient) ListTafseers() ([]Tafseer, error) {
-	ResourcePath := c.BaseURL.ResolveReference(&TafseerPath)
-	resp, err := http.Get(ResourcePath.String())
+	r := c.BaseURL.ResolveReference(&TafseerPath)
+	resp, err := http.Get(r.String())
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	var tafseers []Tafseer
-	err = json.NewDecoder(resp.Body).Decode(&tafseers)
-	return tafseers, err
+	var t []Tafseer
+	err = json.NewDecoder(resp.Body).Decode(&t)
+	return t, err
 }
