@@ -12,3 +12,10 @@ type Tafseer struct {
 	Author    string
 	Book_Name string
 }
+
+type Verse struct {
+	Ayah_Number int
+	Sura_Index  int
+	Sura_Name   string
+	Text        string
+}

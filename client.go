@@ -2,7 +2,7 @@ package gotafseer
 
 import (
 	"encoding/json"
-	//	"fmt"
+	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -17,25 +17,46 @@ var (
 )
 
 func (c *TafseerApiClient) ListChapters() ([]Chapter, error) {
+	var ch []Chapter
 	r := c.BaseURL.ResolveReference(&QuranPath)
 	resp, err := http.Get(r.String())
 	if err != nil {
-		return nil, err
+		return ch, err
 	}
 	defer resp.Body.Close()
-	var ch []Chapter
 	err = json.NewDecoder(resp.Body).Decode(&ch)
-	return ch, err
+	if err != nil {
+		return ch, err
+	}
+	return ch, nil
 }
 
 func (c *TafseerApiClient) ListTafseers() ([]Tafseer, error) {
+	var t []Tafseer
 	r := c.BaseURL.ResolveReference(&TafseerPath)
 	resp, err := http.Get(r.String())
 	if err != nil {
-		return nil, err
+		return t, err
 	}
 	defer resp.Body.Close()
-	var t []Tafseer
 	err = json.NewDecoder(resp.Body).Decode(&t)
-	return t, err
+	if err != nil {
+		return t, err
+	}
+	return t, nil
+}
+
+func (c *TafseerApiClient) GetVerse(s string, v string) (Verse, error) {
+	var vs Verse
+	r := c.BaseURL.ResolveReference(&QuranPath)
+	resp, err := http.Get(fmt.Sprintf("%s/%s/%s", r.String(), s, v))
+	if err != nil {
+		return vs, err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&vs)
+	if err != nil {
+		return vs, err
+	}
+	return vs, nil
 }
