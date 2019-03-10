@@ -19,3 +19,11 @@ type Verse struct {
 	Sura_Name   string
 	Text        string
 }
+
+type VerseTafseer struct {
+	Ayah_Number  int
+	Ayah_Url     string
+	Tafseer_Id   int
+	Tafseer_Name string
+	Text         string
+}
