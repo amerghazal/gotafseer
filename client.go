@@ -75,3 +75,18 @@ func (c *TafseerApiClient) GetVerseTafseer(t string, s string, v string) (VerseT
 	}
 	return vt, nil
 }
+
+func (c *TafseerApiClient) GetVerseTafseerRange(t string, s string, vs string, ve string) ([]VerseTafseer, error) {
+	var vt []VerseTafseer
+	r := c.BaseURL.ResolveReference(&TafseerPath)
+	resp, err := http.Get(fmt.Sprintf("%s/%s/%s/%s/%s", r.String(), t, s, vs, ve))
+	if err != nil {
+		return vt, err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(&vt)
+	if err != nil {
+		return vt, err
+	}
+	return vt, nil
+}
